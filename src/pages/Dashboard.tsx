@@ -65,7 +65,7 @@ const Dashboard = () => {
               <th>Type</th>
               <th>Questions</th>
               <th>Status</th>
-              <th width="220">Actions</th>
+              <th style={{ width: "220px" }}>Actions</th>
             </tr>
           </thead>
 
