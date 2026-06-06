@@ -1,0 +1,12 @@
+// Bootstrap
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+// Third-party
+@import "react-toastify/dist/ReactToastify.css";
+
+// App styles
+@import "./global.scss";
+@import "./login.scss";
+@import "./layout.scss";
+@import "./preview.scss";
+@import "./dashboard.scss";

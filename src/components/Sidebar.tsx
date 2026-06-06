@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { FiTrendingUp, FiEdit3, FiClipboard } from "react-icons/fi";
+import logo from "../assets/images/preproute_logo.png";
 
 const Sidebar = () => {
   return (
     <aside className="sidebar">
       <div className="logo">
-        <h2>PrepRoute</h2>
+        <img src={logo} />
       </div>
 
       <ul className="sidebar-menu">

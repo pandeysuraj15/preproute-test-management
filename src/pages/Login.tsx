@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { login } from "../api/authApi";
 import { loginSchema, type LoginFormData } from "../utils/validationSchemas";
 import LoginIllustration from "../assets/images/login-illustration.png";
+import logo from "../assets/images/preproute_logo.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -39,7 +40,6 @@ const Login = () => {
     <div className="login-page">
       <div className="container-fluid h-100">
         <div className="row h-100">
-          {/* Left Section */}
           <div className="col-lg-6 d-none d-lg-flex login-left">
             <div className="illustration-wrapper">
               <img
@@ -50,16 +50,15 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Right Section */}
           <div className="col-lg-6 col-12 d-flex align-items-center justify-content-center">
             <div className="login-card">
               <div className="logo mb-4">
-                <h3>Preproute</h3>
+                <img src={logo} alt="logo" />
               </div>
 
-              <h5 className="fw-bold mb-2">Login</h5>
+              <h5 className="mb-2 login-title">Login</h5>
 
-              <p className="text-muted small mb-4">
+              <p className="login-subtitle mb-4">
                 Use your company provided login credentials
               </p>
 
