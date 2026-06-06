@@ -1,0 +1,177 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f7f8fc;
+}
+
+.sidebar {
+  width: 240px;
+  background: #fff;
+  border-right: 1px solid #ececec;
+  padding: 20px;
+}
+
+.logo {
+  margin-bottom: 40px;
+
+  h2 {
+    color: #6c63ff;
+    font-weight: 700;
+  }
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.2s ease;
+  }
+
+  a svg {
+    font-size: 20px;
+  }
+
+  a.active {
+    background: #f3f0ff;
+    color: #5b21b6;
+    font-weight: 600;
+    position: relative;
+  }
+
+  a.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 4px;
+    border-radius: 0 4px 4px 0;
+    background: #5b21b6;
+  }
+}
+
+.main-content {
+  flex: 1;
+}
+
+.header {
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid #ececec;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  padding: 0 25px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  background: #6c63ff;
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 600;
+}
+
+.user-info {
+  h6 {
+    margin: 0;
+  }
+
+  span {
+    font-size: 12px;
+    color: #888;
+  }
+}
+
+.page-content {
+  padding: 25px;
+  background: #fff;
+}
+
+.tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: #f5f5f7;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+}
+
+.tabs button {
+  border: none;
+  background: transparent;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tabs button.active {
+  background: #ffffff;
+  color: #5b21b6; /* purple */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.tabs button:hover:not(.active) {
+  color: #6b7280;
+}
+
+.btn.btn-cancel {
+  padding: 8px 48px;
+  color: #384ec7;
+  border-radius: 8px;
+  background-color: #f8faff;
+}
+
+.btn.btn-next {
+  padding: 8px 48px;
+  color: #fafafa;
+  border-radius: 8px;
+  background-color: #7489ff;
+}
+
+.notification {
+  border: 1px solid #d1d5db;
+  border-radius: 50%;
+  padding: 1px 5px;
+}
+
+.tabs button.active-tab {
+  font-size: 14px;
+  color: #384ec7;
+  background-color: #f8faff;
+}
+
