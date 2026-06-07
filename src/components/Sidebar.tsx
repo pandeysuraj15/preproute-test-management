@@ -25,10 +25,10 @@ const Sidebar = () => {
         </li>
 
         <li>
-          <NavLink to="/tracking">
+          <button className="sidebar-link">
             <FiClipboard />
             <span>Test Tracking</span>
-          </NavLink>
+          </button>
         </li>
       </ul>
     </aside>

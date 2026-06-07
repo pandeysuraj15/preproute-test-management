@@ -85,7 +85,7 @@ const Preview = () => {
           <span className="test-type">{test?.type}</span>
 
           <button
-            className="edit-btn"
+            className="preview-edit-btn"
             onClick={() => navigate(`/questions/${id}`)}
           >
             <MdEdit className="edit-icon" />

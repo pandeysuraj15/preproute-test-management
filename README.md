@@ -31,7 +31,7 @@ npm start
 
 ## Deployment
 
-Hosted on Netlify/Vercel
+Hosted on Vercel
 
 ## Author
 

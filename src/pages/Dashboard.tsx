@@ -9,10 +9,32 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [tests, setTests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   useEffect(() => {
     fetchTests();
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      if (
+        scrollTop + windowHeight >= documentHeight - 100 &&
+        visibleCount < tests.length
+      ) {
+        setVisibleCount((prev) => prev + 10);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [visibleCount, tests.length]);
 
   const fetchTests = async () => {
     try {
@@ -70,7 +92,7 @@ const Dashboard = () => {
           </thead>
 
           <tbody>
-            {tests.map((test: any) => (
+            {tests.slice(0, visibleCount).map((test: any) => (
               <tr key={test.id}>
                 <td>{test.name}</td>
 
@@ -81,13 +103,17 @@ const Dashboard = () => {
                 <td>{test.total_questions}</td>
 
                 <td>
-                  <span
-                    className={`status-badge ${
-                      test.status === "live" ? "live" : "draft"
-                    }`}
-                  >
-                    {test.status}
-                  </span>
+                  {!test.status ? (
+                    ""
+                  ) : (
+                    <span
+                      className={`status-badge ${
+                        test.status === "live" ? "live" : "draft"
+                      }`}
+                    >
+                      {test.status}
+                    </span>
+                  )}
                 </td>
 
                 <td>
@@ -109,6 +135,10 @@ const Dashboard = () => {
             ))}
           </tbody>
         </table>
+
+        {visibleCount < tests.length && (
+          <div className="text-center py-3">Loading more...</div>
+        )}
       </div>
     </div>
   );

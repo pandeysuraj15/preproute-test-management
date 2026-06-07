@@ -1,9 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-
 import { createQuestions } from "../api/questionApi";
 import { updateTest, getTestById } from "../api/testApi";
+import { CiSquareQuestion, CiStopwatch } from "react-icons/ci";
+import { BiBarChartAlt2 } from "react-icons/bi";
+import { MdEdit } from "react-icons/md";
+import diceImage from "../assets/images/ar_stickers.png";
+import cognition from "../assets/images/cognition.png";
+import { BsDownload } from "react-icons/bs";
+import { GoPlus } from "react-icons/go";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 const Questions = () => {
   const { id } = useParams();
@@ -20,6 +27,9 @@ const Questions = () => {
       correct_option: "option1",
       explanation: "",
       difficulty: "easy",
+      topic: "",
+      sub_topic: "",
+      media_url: "",
     },
   ]);
 
@@ -35,6 +45,9 @@ const Questions = () => {
         correct_option: "option1",
         explanation: "",
         difficulty: "easy",
+        topic: "",
+        sub_topic: "",
+        media_url: "",
       },
     ]);
   };
@@ -126,78 +139,264 @@ const Questions = () => {
   };
   return (
     <div className="questions-page">
-      <div className="d-flex justify-content-between mb-4">
-        <h3>Questions</h3>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <p className="text-muted mb-1">
+            Test Creation / Create Test / Chapter Wise
+          </p>
+        </div>
 
-        <button className="btn btn-primary" onClick={addQuestion}>
-          + MCQ
+        <button
+          className="btn btn-primary px-4"
+          onClick={handleNext}
+          disabled={!canProceed}
+        >
+          Publish
         </button>
       </div>
+      <div className="summary-card mb-4">
+        <div className="summary-header mb-2">
+          <span className="test-type">{testDetails?.type}</span>
+
+          <button
+            className="preview-edit-btn"
+            onClick={() => navigate(`/questions/${id}`)}
+          >
+            <MdEdit className="edit-icon" />
+          </button>
+        </div>
+
+        <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center gap-2">
+            <img src={diceImage} />
+            <h5>{testDetails?.name}</h5>
+            <div className="difficulty-badge ms-2">
+              <img src={cognition} />
+              <span>{testDetails?.difficulty}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="summary-content">
+          <div className="d-flex align-items-center">
+            <span className="summary-content-label">Subject</span>
+            <span>:</span>
+            <span className="subject-value ms-1">{testDetails?.subject}</span>
+          </div>
+
+          <div className="d-flex align-items-center my-2">
+            <span className="summary-content-label">Topic</span>
+            <span>:</span>
+
+            <div className="ms-2 d-flex flex-wrap gap-2">
+              {testDetails?.topics?.map((topic: string, index: number) => (
+                <span key={index} className="tag-badge">
+                  {topic}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="d-flex align-items-center">
+            <span className="summary-content-label">Sub Topic</span>
+            <span>:</span>
+
+            <div className="ms-2 d-flex flex-wrap gap-2">
+              {testDetails?.sub_topics?.length ? (
+                testDetails.sub_topics.map(
+                  (subTopic: string, index: number) => (
+                    <span key={index} className="tag-badge">
+                      {subTopic}
+                    </span>
+                  )
+                )
+              ) : (
+                <span className="text-muted">-</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="summary-stats">
+          <div className="summary-stats-parent">
+            <div className="d-flex align-items-center gap-1">
+              <CiStopwatch className="summary-stats-icon" />
+              {testDetails?.total_time} Min
+            </div>
+            <div className="summary-stats-divider">|</div>
+            <div className="d-flex align-items-center gap-1">
+              <CiSquareQuestion className="summary-stats-icon" />
+              {testDetails?.total_questions} Qs
+            </div>
+            <div className="summary-stats-divider">|</div>
+            <div className="d-flex align-items-center gap-1">
+              <BiBarChartAlt2 className="summary-stats-icon" />
+              {testDetails?.total_marks} Marks
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h5>
+          <b className="question-title">Question {questions.length}</b>/
+          <span style={{ color: "#afa9ed" }}>
+            {testDetails?.total_questions}
+          </span>
+        </h5>
+
+        <div>
+          <button className="btn mcq-btn me-2" onClick={addQuestion}>
+            <GoPlus className="me-1" />
+            MCQ
+          </button>
+
+          <button className="btn mcq-btn">
+            <BsDownload className="me-1" />
+            CSV
+          </button>
+        </div>
+      </div>
+
+      <div className="mb-3">
+        <span className="delete-edit">
+          <FaRegTrashAlt /> Delete All Edits
+        </span>
+      </div>
+
+      {/* Questions */}
 
       {questions.map((question, index) => (
-        <div className="card p-3 mb-4" key={index}>
-          <h5>Question {index + 1}</h5>
+        <div key={index} className="card border-0 shadow-sm mb-4">
+          <div className="card-body">
+            {/* Question */}
 
-          <textarea
-            className="form-control mb-3"
-            placeholder="Question"
-            value={question.question}
-            onChange={(e) => handleChange(index, "question", e.target.value)}
-          />
+            <textarea
+              rows={8}
+              className="form-control mb-4"
+              placeholder="Type Here"
+              value={question.question}
+              onChange={(e) => handleChange(index, "question", e.target.value)}
+            />
 
-          <input
-            className="form-control mb-2"
-            placeholder="Option 1"
-            value={question.option1}
-            onChange={(e) => handleChange(index, "option1", e.target.value)}
-          />
+            {/* Options */}
 
-          <input
-            className="form-control mb-2"
-            placeholder="Option 2"
-            value={question.option2}
-            onChange={(e) => handleChange(index, "option2", e.target.value)}
-          />
+            <h6 className="mb-3">Type the options below</h6>
 
-          <input
-            className="form-control mb-2"
-            placeholder="Option 3"
-            value={question.option3}
-            onChange={(e) => handleChange(index, "option3", e.target.value)}
-          />
+            <input
+              className="form-control mb-3"
+              placeholder="Option 1"
+              value={question.option1}
+              onChange={(e) => handleChange(index, "option1", e.target.value)}
+            />
 
-          <input
-            className="form-control mb-2"
-            placeholder="Option 4"
-            value={question.option4}
-            onChange={(e) => handleChange(index, "option4", e.target.value)}
-          />
+            <input
+              className="form-control mb-3"
+              placeholder="Option 2"
+              value={question.option2}
+              onChange={(e) => handleChange(index, "option2", e.target.value)}
+            />
 
-          <select
-            className="form-control mb-3"
-            value={question.correct_option}
-            onChange={(e) =>
-              handleChange(index, "correct_option", e.target.value)
-            }
-          >
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-            <option value="option4">Option 4</option>
-          </select>
+            <input
+              className="form-control mb-3"
+              placeholder="Option 3"
+              value={question.option3}
+              onChange={(e) => handleChange(index, "option3", e.target.value)}
+            />
 
-          <textarea
-            className="form-control"
-            placeholder="Explanation"
-            value={question.explanation}
-            onChange={(e) => handleChange(index, "explanation", e.target.value)}
-          />
+            <input
+              className="form-control mb-4"
+              placeholder="Option 4"
+              value={question.option4}
+              onChange={(e) => handleChange(index, "option4", e.target.value)}
+            />
+
+            {/* Correct Option */}
+
+            <div className="mb-4">
+              <label className="form-label">Correct Option</label>
+
+              <select
+                className="form-control"
+                value={question.correct_option}
+                onChange={(e) =>
+                  handleChange(index, "correct_option", e.target.value)
+                }
+              >
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+              </select>
+            </div>
+
+            {/* Solution */}
+
+            <div className="mb-4">
+              <label className="form-label">Add Solution</label>
+
+              <textarea
+                rows={8}
+                className="form-control"
+                placeholder="Type here"
+                value={question.explanation}
+                onChange={(e) =>
+                  handleChange(index, "explanation", e.target.value)
+                }
+              />
+            </div>
+
+            {/* Question Settings */}
+
+            <h6 className="mb-3">Question Settings</h6>
+
+            <div className="row">
+              <div className="col-md-4 mb-3">
+                <label>Level of Difficulty</label>
+
+                <select
+                  className="form-control"
+                  value={question.difficulty}
+                  onChange={(e) =>
+                    handleChange(index, "difficulty", e.target.value)
+                  }
+                >
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="difficult">Difficult</option>
+                </select>
+              </div>
+
+              <div className="col-md-4 mb-3">
+                <label>Topic</label>
+
+                <select className="form-control">
+                  <option>Select Topic</option>
+                </select>
+              </div>
+
+              <div className="col-md-4 mb-3">
+                <label>Sub Topic</label>
+
+                <select className="form-control">
+                  <option>Select Sub Topic</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
       ))}
 
-      <div className="text-end">
+      <div className="d-flex justify-content-between mt-4">
         <button
-          className="btn btn-success"
+          className="btn exit-test-btn"
+          onClick={() => navigate("/dashboard")}
+        >
+          Exit Test Creation
+        </button>
+
+        <button
+          className="btn btn-primary px-5"
           onClick={handleNext}
           disabled={!canProceed}
         >
