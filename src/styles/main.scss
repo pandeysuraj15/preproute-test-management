@@ -1,13 +1,6 @@
-// Bootstrap
-@import "bootstrap/dist/css/bootstrap.min.css";
-
-// Third-party
-@import "react-toastify/dist/ReactToastify.css";
-
-// App styles
-@import "./global.scss";
-@import "./login.scss";
-@import "./layout.scss";
-@import "./preview.scss";
-@import "./dashboard.scss";
-@import "./question.scss";
+@use "./global.scss" as *;
+@use "./login.scss" as *;
+@use "./layout.scss" as *;
+@use "./preview.scss" as *;
+@use "./dashboard.scss" as *;
+@use "./question.scss" as *;

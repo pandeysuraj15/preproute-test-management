@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
-import { FiTrendingUp, FiEdit3, FiClipboard } from "react-icons/fi";
+import { FaRegEdit } from "react-icons/fa";
+import { FiTrendingUp } from "react-icons/fi";
+import { TbClipboardSearch } from "react-icons/tb";
 import logo from "../assets/images/preproute_logo.png";
 
 const Sidebar = () => {
@@ -19,14 +21,14 @@ const Sidebar = () => {
 
         <li>
           <NavLink to="/create-test">
-            <FiEdit3 />
+            <FaRegEdit />
             <span>Test Creation</span>
           </NavLink>
         </li>
 
         <li>
           <button className="sidebar-link">
-            <FiClipboard />
+            <TbClipboardSearch />
             <span>Test Tracking</span>
           </button>
         </li>

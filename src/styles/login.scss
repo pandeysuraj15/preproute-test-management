@@ -38,6 +38,10 @@
   font-size: 14px;
 }
 
+.form-control::placeholder {
+  color: #d1d5db;
+}
+
 .form-label {
   font-weight: 500;
   font-size: 16px;

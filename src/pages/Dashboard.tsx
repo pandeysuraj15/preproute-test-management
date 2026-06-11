@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { getTests } from "../api/testApi";
+import Loader from "../components/Loader";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getTests } from "../api/testApi";
-import "../styles/dashboard.scss";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
-import Loader from "../components/Loader";
 
 const Dashboard = () => {
   const navigate = useNavigate();

@@ -45,9 +45,9 @@
   }
 
   a.active {
-    background: #f3f0ff;
-    color: #5b21b6;
-    font-weight: 600;
+    background: #f8faff;
+    color: #384ec7;
+    font-weight: 500;
     position: relative;
   }
 
@@ -122,7 +122,6 @@
   align-items: center;
   gap: 4px;
   padding: 4px;
-  background: #f5f5f7;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
 }
@@ -154,13 +153,24 @@
   color: #384ec7;
   border-radius: 8px;
   background-color: #f8faff;
+
+  &:hover {
+    background: #f8faff;
+    color: #384ec7;
+  }
 }
 
-.btn.btn-next {
+.btn-next {
   padding: 8px 48px;
   color: #fafafa;
   border-radius: 8px;
   background-color: #7489ff;
+  border: none;
+
+  &:hover {
+    background: #7489ff;
+    color: #fafafa;
+  }
 }
 
 .notification {
@@ -191,4 +201,33 @@
 
 .sidebar-link svg {
   font-size: 20px;
+}
+
+.breadcrumb {
+  color: #000000;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  pointer-events: none;
+  font-size: 18px;
+}
+
+.select-wrapper select {
+  appearance: none;
+  padding-right: 40px;
+}
+
+.placeholder-select {
+  color: #d1d5db;
 }

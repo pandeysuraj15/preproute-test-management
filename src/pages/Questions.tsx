@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -11,12 +12,14 @@ import cognition from "../assets/images/cognition.png";
 import { BsDownload } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
 import { FaRegTrashAlt } from "react-icons/fa";
+import Loader from "../components/Loader";
+import { FiChevronDown } from "react-icons/fi";
 
 const Questions = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [testDetails, setTestDetails] = useState<any>(null);
-
   const [questions, setQuestions] = useState([
     {
       question: "",
@@ -58,6 +61,7 @@ const Questions = () => {
 
   const fetchTestDetails = async () => {
     try {
+      setLoading(true);
       const response = await getTestById(id!);
 
       setTestDetails(response.data.data);
@@ -65,6 +69,8 @@ const Questions = () => {
       console.log("Test Details:", response.data.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -137,6 +143,10 @@ const Questions = () => {
       toast.error(error?.response?.data?.message || "Failed to save questions");
     }
   };
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div className="questions-page">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -285,28 +295,28 @@ const Questions = () => {
 
             <input
               className="form-control mb-3"
-              placeholder="Option 1"
+              placeholder="Type Option here"
               value={question.option1}
               onChange={(e) => handleChange(index, "option1", e.target.value)}
             />
 
             <input
               className="form-control mb-3"
-              placeholder="Option 2"
+              placeholder="Type Option here"
               value={question.option2}
               onChange={(e) => handleChange(index, "option2", e.target.value)}
             />
 
             <input
               className="form-control mb-3"
-              placeholder="Option 3"
+              placeholder="Type Option here"
               value={question.option3}
               onChange={(e) => handleChange(index, "option3", e.target.value)}
             />
 
             <input
               className="form-control mb-4"
-              placeholder="Option 4"
+              placeholder="Type Option here"
               value={question.option4}
               onChange={(e) => handleChange(index, "option4", e.target.value)}
             />
@@ -348,39 +358,46 @@ const Questions = () => {
 
             {/* Question Settings */}
 
-            <h6 className="mb-3">Question Settings</h6>
+            <h6 className="mb-4">Question settings</h6>
 
-            <div className="row">
-              <div className="col-md-4 mb-3">
-                <label>Level of Difficulty</label>
-
-                <select
-                  className="form-control"
-                  value={question.difficulty}
-                  onChange={(e) =>
-                    handleChange(index, "difficulty", e.target.value)
-                  }
-                >
-                  <option value="easy">Easy</option>
-                  <option value="medium">Medium</option>
-                  <option value="difficult">Difficult</option>
-                </select>
+            <div>
+              <div>
+                <label className="mb-2">Level of Difficulty</label>
+                <div className="select-wrapper">
+                  <select
+                    className="form-control placeholder-select"
+                    value={question.difficulty}
+                    onChange={(e) =>
+                      handleChange(index, "difficulty", e.target.value)
+                    }
+                  >
+                    <option value="easy">Select from Drop-down</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="difficult">Difficult</option>
+                  </select>
+                  <FiChevronDown className="select-arrow" />{" "}
+                </div>
               </div>
 
-              <div className="col-md-4 mb-3">
-                <label>Topic</label>
-
-                <select className="form-control">
-                  <option>Select Topic</option>
-                </select>
+              <div>
+                <label className="my-2">Topic</label>
+                <div className="select-wrapper">
+                  <select className="form-control placeholder-select">
+                    <option>Select from Drop-down</option>
+                  </select>
+                  <FiChevronDown className="select-arrow" />{" "}
+                </div>
               </div>
 
-              <div className="col-md-4 mb-3">
-                <label>Sub Topic</label>
-
-                <select className="form-control">
-                  <option>Select Sub Topic</option>
-                </select>
+              <div>
+                <label className="my-2">Sub-topic</label>
+                <div className="select-wrapper">
+                  <select className="form-control placeholder-select">
+                    <option>Select from Drop-down</option>
+                  </select>
+                  <FiChevronDown className="select-arrow" />{" "}
+                </div>
               </div>
             </div>
           </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +10,7 @@ import {
 
 import { createTest } from "../api/testApi";
 import { toast } from "react-toastify";
+import { FiChevronDown } from "react-icons/fi";
 
 const CreateTest = () => {
   const navigate = useNavigate();
@@ -156,41 +158,33 @@ const CreateTest = () => {
           Chapter Wise
         </button>
 
-        <button
-          // className={testType === "pyq" ? "active-tab" : ""}
-          // onClick={() => setTestType("pyq")}
-          disabled
-        >
-          PYQ
-        </button>
+        <button disabled>PYQ</button>
 
-        <button
-          // className={testType === "mock" ? "active-tab" : ""}
-          // onClick={() => setTestType("mock")}
-          disabled
-        >
-          Mock Test
-        </button>
+        <button disabled>Mock Test</button>
       </div>
 
       <div className="row mt-4">
         <div className="col-md-6">
           <label className="mb-2">Subject</label>
+          <div className="select-wrapper">
+            <select
+              className={`form-control ${
+                !formData.subject ? "placeholder-select" : ""
+              }`}
+              value={formData.subject}
+              name="subject"
+              onChange={handleSubjectChange}
+            >
+              <option value="">Choose from Drop-down</option>
 
-          <select
-            className="form-control"
-            value={formData.subject}
-            name="subject"
-            onChange={handleSubjectChange}
-          >
-            <option value="">Select Subject</option>
-
-            {subjects.map((subject) => (
-              <option key={subject.id} value={subject.id}>
-                {subject.name}
-              </option>
-            ))}
-          </select>
+              {subjects.map((subject) => (
+                <option key={subject.id} value={subject.id}>
+                  {subject.name}
+                </option>
+              ))}
+            </select>
+            <FiChevronDown className="select-arrow" />{" "}
+          </div>
         </div>
 
         <div className="col-md-6">
@@ -198,7 +192,7 @@ const CreateTest = () => {
 
           <input
             className="form-control"
-            placeholder="Enter test name"
+            placeholder="Enter name of Test"
             name="name"
             value={formData.name}
             onChange={handleChange}
@@ -209,39 +203,47 @@ const CreateTest = () => {
       <div className="row mt-4">
         <div className="col-md-6">
           <label className="mb-2">Topic</label>
+          <div className="select-wrapper">
+            <select
+              className={`form-control ${
+                !formData.topic ? "placeholder-select" : ""
+              }`}
+              value={formData.topic}
+              onChange={handleTopicChange}
+            >
+              <option value="">Choose from Drop-down</option>
 
-          <select
-            className="form-control"
-            value={formData.topic}
-            onChange={handleTopicChange}
-          >
-            <option value="">Select Topic</option>
-
-            {topics.map((topic) => (
-              <option key={topic.id} value={topic.id}>
-                {topic.name}
-              </option>
-            ))}
-          </select>
+              {topics.map((topic) => (
+                <option key={topic.id} value={topic.id}>
+                  {topic.name}
+                </option>
+              ))}
+            </select>
+            <FiChevronDown className="select-arrow" />{" "}
+          </div>
         </div>
 
         <div className="col-md-6">
           <label className="mb-2">Sub Topic</label>
+          <div className="select-wrapper">
+            <select
+              className={`form-control ${
+                !formData.subTopic ? "placeholder-select" : ""
+              }`}
+              name="subTopic"
+              value={formData.subTopic}
+              onChange={handleChange}
+            >
+              <option value="">Choose from Drop-down</option>
 
-          <select
-            className="form-control"
-            name="subTopic"
-            value={formData.subTopic}
-            onChange={handleChange}
-          >
-            <option value="">Select Sub Topic</option>
-
-            {subTopics.map((subTopic: any) => (
-              <option key={subTopic.id} value={subTopic.id}>
-                {subTopic.name}
-              </option>
-            ))}
-          </select>
+              {subTopics.map((subTopic: any) => (
+                <option key={subTopic.id} value={subTopic.id}>
+                  {subTopic.name}
+                </option>
+              ))}
+            </select>
+            <FiChevronDown className="select-arrow" />{" "}
+          </div>
         </div>
       </div>
 
@@ -253,6 +255,7 @@ const CreateTest = () => {
             className="form-control"
             type="number"
             name="total_time"
+            placeholder="Enter the time"
             value={formData.total_time}
             onChange={handleChange}
           />
@@ -335,12 +338,13 @@ const CreateTest = () => {
         </div>
 
         <div className="col-md-3">
-          <label className="mb-2">No Of Questions</label>
+          <label className="mb-2">No of Questions</label>
 
           <input
             type="number"
             className="form-control"
             name="total_questions"
+            placeholder="Ex:250 Marks"
             value={formData.total_questions}
             onChange={handleChange}
           />
@@ -352,6 +356,7 @@ const CreateTest = () => {
             type="number"
             className="form-control"
             name="total_marks"
+            placeholder="Ex:250 Marks"
             value={formData.total_marks}
             onChange={handleChange}
           />
@@ -368,7 +373,7 @@ const CreateTest = () => {
 
         <button
           type="button"
-          className="btn btn-next"
+          className="btn-next"
           onClick={handleNext}
           disabled={loading}
         >
